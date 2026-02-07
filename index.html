@@ -64,64 +64,47 @@ h1 {
   box-shadow: 0 0 5px white, 0 0 10px white;
   transition: transform 0.2s, background 0.2s;
 }
-.btn:hover {
-  transform: scale(1.1);
-  background: #ffffff;
-}
+.btn:hover { transform: scale(1.1); background: #fff; }
 
-/* 🎵 YOUTUBE FLOATING PLAYER */
+/* 🎵 LIQUID GLASS PLAYER */
 #yt-widget {
   position: fixed;
   bottom: 25px;
   right: 25px;
-  width: 330px;
-  height: 210px;
-  border-radius: 22px;
-  backdrop-filter: blur(25px) saturate(180%);
-  background: rgba(255,255,255,0.08);
+  width: 340px;
+  height: 215px;
+  border-radius: 24px;
+  backdrop-filter: blur(20px);
+  background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.15);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.45);
   overflow: hidden;
   z-index: 9999;
-  animation: floatIn 1.2s ease;
 }
 
-/* glow */
-.yt-glow {
-  position: absolute;
-  width: 200%;
-  height: 200%;
-  top: -50%;
-  left: -50%;
-  background: conic-gradient(from 0deg,#ff0080,#ff8c00,#40e0d0,#ff0080);
-  filter: blur(80px);
-  opacity: 0.25;
-  animation: spinGlow 12s linear infinite;
+/* 🌈 Neon moving background */
+.neon-bg {
+  position:absolute;
+  inset:-50%;
+  background:
+    radial-gradient(circle at 30% 40%, #ff00c8, transparent 40%),
+    radial-gradient(circle at 70% 60%, #00fff7, transparent 40%),
+    radial-gradient(circle at 50% 20%, #ff8c00, transparent 40%);
+  filter: blur(60px);
+  opacity:0.6;
+  animation: neonMove 8s linear infinite;
 }
-@keyframes spinGlow { 100% { transform: rotate(360deg); } }
 
-.yt-header {
-  height: 32px;
-  display: flex;
-  align-items: center;
-  padding: 0 10px;
-  gap: 6px;
-  background: rgba(0,0,0,0.35);
-  backdrop-filter: blur(15px);
+@keyframes neonMove {
+  0% { transform: translate(0,0) rotate(0deg); }
+  50% { transform: translate(-10%,10%) rotate(180deg); }
+  100% { transform: translate(0,0) rotate(360deg); }
 }
-.dot { width:10px;height:10px;border-radius:50%; }
-.red {background:#ff5f57;}
-.yellow {background:#ffbd2e;}
-.green {background:#28c840;}
 
-.yt-title { margin-left:6px;color:white;font-size:12px;opacity:0.8; }
-#yt-close { margin-left:auto;background:none;border:none;color:white;font-size:16px;cursor:pointer; }
-
-.yt-video iframe { width:100%; height:calc(100% - 32px); border:none; }
-
-@keyframes floatIn {
-  from { transform: translateY(80px) scale(0.8); opacity: 0; }
-  to { transform: translateY(0) scale(1); opacity: 1; }
+.yt-video iframe {
+  position:relative;
+  width:100%;
+  height:100%;
+  border:none;
 }
 </style>
 </head>
@@ -142,7 +125,7 @@ h1 {
   </div>
 </div>
 
-<!-- ⭐ STARS SCRIPT -->
+<!-- ⭐ STARS -->
 <script>
 const starCount = 150;
 const stars = [];
@@ -187,26 +170,22 @@ kofiWidgetOverlay.draw('itslucaa', {
 });
 </script>
 
-<!-- 🎵 YOUTUBE PLAYER -->
+<!-- 🎵 PLAYER -->
 <div id="yt-widget">
-  <div class="yt-glow"></div>
-  <div class="yt-header">
-    <span class="dot red"></span>
-    <span class="dot yellow"></span>
-    <span class="dot green"></span>
-    <span class="yt-title">Now Playing</span>
-    <button id="yt-close">✕</button>
-  </div>
+  <div class="neon-bg"></div>
   <div class="yt-video">
-    <iframe src="https://www.youtube.com/embed/0PNaf6DkYHE?autoplay=1&mute=1&controls=1"
+    <iframe id="ytplayer"
+      src="https://www.youtube.com/embed/0PNaf6DkYHE?enablejsapi=1&controls=1"
       allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </div>
 </div>
 
 <script>
-document.getElementById("yt-close").onclick = () => {
-  document.getElementById("yt-widget").style.display = "none";
-};
+/* autoplay con audio dopo primo click */
+document.body.addEventListener("click", () => {
+  const iframe = document.getElementById("ytplayer");
+  iframe.src += "&autoplay=1";
+}, { once:true });
 </script>
 
 </body>
