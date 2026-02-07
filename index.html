@@ -9,40 +9,76 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-body{
-  margin:0;
-  background:black;
-  overflow:hidden;
-  height:100vh;
-  font-family:Poppins;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:white;
+body {
+  margin: 0;
+  background: black;
+  overflow: hidden;
+  height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* ⭐ stars */
-.star{position:absolute;width:3px;height:3px;background:white;border-radius:50%;}
+/* ⭐ STARS */
+.star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: white;
+}
 
 /* CONTENT */
-.content{position:relative;text-align:center;z-index:5;max-width:700px;padding:2rem;}
-h1{font-size:4rem;text-shadow:0 0 10px white;}
-.description{color:#ccc;margin-top:1rem;line-height:1.6;}
-.btn{padding:.6rem 1.2rem;margin:.5rem;border-radius:.5rem;background:#c0c0c0;color:black;font-weight:bold;text-decoration:none;box-shadow:0 0 10px white;}
-.btn:hover{transform:scale(1.1);background:white}
+.content {
+  position: relative;
+  text-align: center;
+  z-index: 10;
+  max-width: 700px;
+  padding: 2rem;
+}
 
-/* 🎵 PLAYER CONTAINER */
+h1 {
+  font-size: 4rem;
+  font-weight: 700;
+  text-shadow: 0 0 5px white, 0 0 10px white;
+}
+
+.description {
+  margin-top: 1rem;
+  line-height: 1.6;
+  color: #ccc;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+  background: #c0c0c0;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  text-shadow: 0 0 5px white, 0 0 10px white;
+  box-shadow: 0 0 5px white, 0 0 10px white;
+  transition: transform 0.2s, background 0.2s;
+}
+.btn:hover { transform: scale(1.1); background: white; }
+
+/* 🎵 PLAYER */
 #yt-widget{
   position:fixed;
-  bottom:30px;
-  right:30px;
+  bottom:25px;
+  right:25px;
   width:340px;
   height:215px;
   border-radius:22px;
   overflow:visible;
+  z-index:999;
 }
 
-/* 🌈 AUDIO REACTIVE NEON */
+/* neon reactive */
 .neon-audio{
   position:absolute;
   inset:-40px;
@@ -51,7 +87,7 @@ h1{font-size:4rem;text-shadow:0 0 10px white;}
   opacity:.9;
 }
 
-/* glass square */
+/* glass box */
 .player-box{
   width:100%;
   height:100%;
@@ -63,12 +99,7 @@ h1{font-size:4rem;text-shadow:0 0 10px white;}
   box-shadow:0 20px 50px rgba(0,0,0,.6);
 }
 
-/* video fills square */
-iframe{
-  width:100%;
-  height:100%;
-  border:none;
-}
+iframe{ width:100%; height:100%; border:none; }
 </style>
 </head>
 
@@ -77,22 +108,60 @@ iframe{
 <div class="content">
   <h1>👋 Hi, I'm Luca!</h1>
   <div class="description">
-    <p>🧑‍💻 Student & self-taught developer exploring AI and game dev.</p>
-    <p>📍 Italy • ☕ Coffee powered</p>
+    <p>🧑‍💻 I'm a 17-year-old student and self-taught developer passionate about coding, exploring AI, and creating interactive projects.</p>
+    <p>📍 Based in Italy • ☕ Fueled by curiosity and coffee</p>
+    <p>⚙️ Currently exploring Flutter, game development, and AI fundamentals.</p>
   </div>
-  <a href="https://github.com/LUCAIM08" class="btn">GitHub</a>
-  <a href="https://discord.com/users/lucaim08_" class="btn">Discord</a>
+
+  <div>
+    <a href="https://github.com/LUCAIM08" class="btn" target="_blank">GitHub</a>
+    <a href="https://discord.com/users/lucaim08_" class="btn" target="_blank">Discord</a>
+  </div>
 </div>
 
-<!-- stars -->
+<!-- ⭐ STARS SCRIPT -->
 <script>
-for(let i=0;i<150;i++){
- const s=document.createElement("div");
- s.className="star";
- s.style.left=Math.random()*100+"vw";
- s.style.top=Math.random()*100+"vh";
- document.body.appendChild(s);
+const starCount=150;
+const stars=[];
+for(let i=0;i<starCount;i++){
+ const star=document.createElement('div');
+ star.className='star';
+ star.x=Math.random()*window.innerWidth;
+ star.y=Math.random()*window.innerHeight;
+ star.vx=(Math.random()-0.5)*0.5;
+ star.vy=(Math.random()-0.5)*0.5;
+ star.blinkSpeed=0.02+Math.random()*0.03;
+ star.opacityPhase=Math.random()*Math.PI*2;
+ document.body.appendChild(star);
+ stars.push(star);
 }
+function animateStars(){
+ const t=Date.now()/1000;
+ stars.forEach(star=>{
+   star.x+=star.vx;
+   star.y+=star.vy;
+   if(star.x<0) star.x=window.innerWidth;
+   if(star.x>window.innerWidth) star.x=0;
+   if(star.y<0) star.y=window.innerHeight;
+   if(star.y>window.innerHeight) star.y=0;
+   star.style.left=star.x+'px';
+   star.style.top=star.y+'px';
+   star.style.opacity=0.3+0.7*Math.abs(Math.sin(t*star.blinkSpeed+star.opacityPhase));
+ });
+ requestAnimationFrame(animateStars);
+}
+animateStars();
+</script>
+
+<!-- ☕ KO-FI -->
+<script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
+<script>
+kofiWidgetOverlay.draw('itslucaa',{
+'type':'floating-chat',
+'floating-chat.donateButton.text':'Support me',
+'floating-chat.donateButton.background-color':'#fff',
+'floating-chat.donateButton.text-color':'#000'
+});
 </script>
 
 <!-- 🎵 PLAYER -->
@@ -112,29 +181,25 @@ document.body.addEventListener("click",()=>{
   iframe.src+="&autoplay=1";
 },{once:true});
 
-/* 🎶 FAKE AUDIO REACTIVE NEON */
+/* neon audio reactive fake */
 const canvas=document.getElementById("visualizer");
 const ctx=canvas.getContext("2d");
-canvas.width=500;
-canvas.height=400;
-
+canvas.width=500; canvas.height=400;
 let t=0;
 function animate(){
-  t+=0.03;
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-
-  for(let i=0;i<3;i++){
-    ctx.beginPath();
-    let radius=120+Math.sin(t+i)*40+Math.random()*10;
-    let gradient=ctx.createRadialGradient(250,200,50,250,200,radius);
-    gradient.addColorStop(0,["#ff00c8","#00fff7","#ff8c00"][i]);
-    gradient.addColorStop(1,"transparent");
-    ctx.fillStyle=gradient;
-    ctx.arc(250,200,radius,0,Math.PI*2);
-    ctx.fill();
-  }
-
-  requestAnimationFrame(animate);
+ t+=0.03;
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+ for(let i=0;i<3;i++){
+   ctx.beginPath();
+   let radius=120+Math.sin(t+i)*40+Math.random()*10;
+   let g=ctx.createRadialGradient(250,200,50,250,200,radius);
+   g.addColorStop(0,["#ff00c8","#00fff7","#ff8c00"][i]);
+   g.addColorStop(1,"transparent");
+   ctx.fillStyle=g;
+   ctx.arc(250,200,radius,0,Math.PI*2);
+   ctx.fill();
+ }
+ requestAnimationFrame(animate);
 }
 animate();
 </script>
