@@ -5,4 +5,5 @@ import tailwind from '@astrojs/tailwind';
 export default defineConfig({
   devToolbar: { enabled: false },
   integrations: [react(), tailwind({ applyBaseStyles: false })],
+  site: 'https://itslucaa.is-a.dev',
 });
