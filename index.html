@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="it" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luca Illica Magrini — Software Developer & CS Student</title>
+  <meta name="description" content="Portfolio di Luca Illica Magrini (LUCAIM08): software engineering, FTC Robotics, sistemi embedded e web app custom. Aperto a collaborazioni." />
+  <meta name="theme-color" content="#04060b" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: { 950: '#04060b', 900: '#070a12', 800: '#0c111c', 700: '#141b2b' },
+            neon: { cyan: '#22d3ee', indigo: '#6366f1', volt: '#a3ff12' },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['"Fira Code"', 'ui-monospace', 'monospace'],
+          },
+          boxShadow: {
+            glow: '0 0 24px rgba(34,211,238,.35)',
+            'glow-indigo': '0 0 24px rgba(99,102,241,.4)',
+            'glow-volt': '0 0 14px rgba(163,255,18,.7)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root { color-scheme: dark; }
+    html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+    body {
+      background-color: #04060b;
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(99,102,241,.18), transparent),
+        radial-gradient(ellipse 60% 40% at 90% 40%, rgba(34,211,238,.08), transparent);
+      background-attachment: fixed;
+    }
+    ::selection { background: rgba(34,211,238,.3); }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #04060b; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 8px; }
+
+    .glass {
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.04);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 8px 32px rgba(0,0,0,.35);
+    }
+    .section { position: relative; margin: 0 auto; width: 100%; max-width: 72rem; padding: 6rem 1.5rem; }
+    @media (min-width: 768px) { .section { padding-top: 8rem; padding-bottom: 8rem; } }
+    .section-label { font-family: 'Fira Code', monospace; font-size: .875rem; letter-spacing: .15em; color: #22d3ee; text-transform: uppercase; }
+    .section-title { margin-top: .5rem; font-size: 1.875rem; font-weight: 700; letter-spacing: -.02em; color: #fff; }
+    @media (min-width: 768px) { .section-title { font-size: 2.25rem; } }
+    .grad-text { background: linear-gradient(90deg, #22d3ee, #6366f1); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    /* ---------- Reveal on scroll ---------- */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* ---------- Hero split text ---------- */
+    .word { display: inline-block; margin-right: .28em; opacity: 0; transform: scale(.7) translateY(20px); filter: blur(6px);
+            animation: wordIn .7s cubic-bezier(.34,1.56,.64,1) forwards; }
+    @keyframes wordIn { to { opacity: 1; transform: none; filter: blur(0); } }
+    .fade-up { opacity: 0; transform: translateY(20px); animation: fadeUp .7s ease forwards; }
+    @keyframes fadeUp { to { opacity: 1; transform: none; } }
+
+    /* ---------- Pulsing badge ---------- */
+    @keyframes pingSlow { 75%, 100% { transform: scale(2.4); opacity: 0; } }
+    .ping-slow { animation: pingSlow 2s cubic-bezier(0,0,.2,1) infinite; }
+
+    /* ---------- CTA glowing border ---------- */
+    .cta { position: relative; display: inline-flex; overflow: hidden; border-radius: .75rem; padding: 2px; }
+    .cta .spin { position: absolute; inset: -100%; opacity: 0; transition: opacity .3s;
+      background: conic-gradient(from 0deg, transparent 0 60%, #22d3ee 75%, #6366f1 90%, #a3ff12 100%);
+      animation: spin 3s linear infinite; }
+    .cta:hover .spin { opacity: 1; }
+    .cta .edge { position: absolute; inset: 0; border-radius: .75rem; border: 1px solid rgba(34,211,238,.4); transition: opacity .3s; }
+    .cta:hover .edge { opacity: 0; }
+    .cta .inner { position: relative; border-radius: 10px; background: #070a12; padding: .875rem 1.75rem; font-family: 'Fira Code', monospace; font-size: .875rem; font-weight: 500; color: #fff; transition: box-shadow .3s; }
+    .cta:hover .inner { box-shadow: 0 0 24px rgba(34,211,238,.35); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ---------- Skill badges ---------- */
+    .badge { opacity: 0; transform: translateY(24px) scale(.85); animation: badgeIn .5s cubic-bezier(.34,1.56,.64,1) forwards;
+             cursor: default; border: 1px solid rgba(255,255,255,.1); background: rgba(12,17,28,.8); border-radius: .75rem;
+             padding: .625rem 1rem; font-family: 'Fira Code', monospace; font-size: .875rem; color: #cbd5e1;
+             transition: transform .25s, border-color .25s, box-shadow .25s, color .25s; }
+    @keyframes badgeIn { to { opacity: 1; transform: none; } }
+    .badge:hover { transform: scale(1.1); border-color: var(--c); color: var(--c);
+                   box-shadow: 0 0 20px color-mix(in srgb, var(--c) 40%, transparent), inset 0 0 12px color-mix(in srgb, var(--c) 13%, transparent); }
+    .tab-btn { position: relative; border-radius: .5rem; border: 1px solid transparent; padding: .5rem 1rem; font-family: 'Fira Code', monospace; font-size: .8rem; color: #64748b; transition: all .25s; }
+    .tab-btn:hover { color: #cbd5e1; }
+    .tab-btn.active { color: #fff; border-color: rgba(34,211,238,.4); background: rgba(34,211,238,.1); }
+
+    /* ---------- Project cards ---------- */
+    .tilt-wrap { perspective: 1000px; }
+    .tilt { position: relative; display: block; height: 100%; overflow: hidden; border-radius: 1.5rem; padding: 1.75rem;
+            transform-style: preserve-3d; transition: transform .15s ease-out, box-shadow .3s, border-color .3s; }
+    .tilt:hover { box-shadow: 0 0 36px color-mix(in srgb, var(--a) 27%, transparent); border-color: color-mix(in srgb, var(--a) 53%, transparent); }
+    .tilt .shine { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s;
+                   background: radial-gradient(circle at var(--mx,50%) var(--my,50%), color-mix(in srgb, var(--a) 20%, transparent), transparent 60%); }
+    .tilt:hover .shine { opacity: 1; }
+    .tilt .content { position: relative; display: flex; height: 100%; flex-direction: column; transform: translateZ(40px); }
+
+    /* ---------- Form ---------- */
+    .field { width: 100%; border-radius: .75rem; border: 1px solid rgba(255,255,255,.1); background: rgba(7,10,18,.7);
+             padding: .75rem 1rem; font-size: .875rem; color: #f1f5f9; outline: none; transition: all .3s; }
+    .field::placeholder { color: #64748b; }
+    .field:focus { border-color: rgba(34,211,238,.7); box-shadow: 0 0 0 3px rgba(34,211,238,.15), 0 0 22px rgba(34,211,238,.25); }
+    .field option { background: #070a12; }
+    .lbl { display: block; margin-bottom: .375rem; font-family: 'Fira Code', monospace; font-size: .75rem; color: #94a3b8; }
+    #submitBtn { transition: border-color .3s, box-shadow .3s, transform .15s; }
+    #submitBtn:hover:not(:disabled) { box-shadow: 0 0 24px rgba(34,211,238,.35); transform: scale(1.02); }
+    #submitBtn:active:not(:disabled) { transform: scale(.97); }
+    .spinner { margin-right: .5rem; height: 1rem; width: 1rem; border-radius: 9999px; border: 2px solid #22d3ee; border-top-color: transparent; animation: spin .8s linear infinite; }
+    .check path { stroke-dasharray: 30; stroke-dashoffset: 30; animation: draw .5s ease forwards; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    .burst-dot { position: absolute; height: 4px; width: 4px; border-radius: 9999px; animation: burst .8s ease-out forwards; }
+    @keyframes burst { to { transform: translate(var(--x), var(--y)) scale(.3); opacity: 0; } }
+
+    /* ---------- Toast ---------- */
+    #toast { position: fixed; bottom: 2rem; left: 50%; z-index: 60; transform: translate(-50%, 30px) scale(.9); opacity: 0; pointer-events: none;
+             border-radius: .75rem; border: 1px solid rgba(163,255,18,.4); padding: .75rem 1.25rem;
+             font-family: 'Fira Code', monospace; font-size: .875rem; color: #a3ff12; box-shadow: 0 0 14px rgba(163,255,18,.4);
+             transition: all .3s ease; }
+    #toast.show { transform: translate(-50%, 0) scale(1); opacity: 1; }
+
+    /* ---------- Terminal ---------- */
+    .cursor { display: inline-block; height: 1.25rem; width: .5rem; background: #22d3ee; vertical-align: middle; margin-left: 1px; animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+    #termInput { position: absolute; inset: 0; width: 100%; background: transparent; color: transparent; caret-color: transparent; outline: none; }
+
+    /* ---------- Footer float ---------- */
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    .float { animation: float 2.4s ease-in-out infinite; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+
+<body class="bg-ink-950 font-sans text-slate-200 antialiased">
+  <canvas id="bg" aria-hidden="true" class="pointer-events-none fixed inset-0 z-0"></canvas>
+
+  <!-- NAVBAR -->
+  <header class="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4">
+    <nav class="glass flex w-full max-w-3xl items-center justify-between rounded-2xl px-5 py-3">
+      <a href="#top" class="font-mono text-sm font-semibold text-white"><span class="text-neon-cyan">&lt;</span>LUCAIM08<span class="text-neon-cyan">/&gt;</span></a>
+      <ul class="hidden gap-6 text-sm text-slate-400 sm:flex">
+        <li><a href="#about" class="transition-colors hover:text-neon-cyan">About</a></li>
+        <li><a href="#projects" class="transition-colors hover:text-neon-cyan">Progetti</a></li>
+        <li><a href="#contact" class="transition-colors hover:text-neon-cyan">Contatti</a></li>
+        <li><a href="#lab" class="transition-colors hover:text-neon-cyan">Lab</a></li>
+      </ul>
+      <a href="#contact" class="rounded-lg border border-neon-cyan/40 px-3 py-1.5 font-mono text-xs text-neon-cyan transition hover:bg-neon-cyan/10 hover:shadow-glow">Hire me</a>
+    </nav>
+  </header>
+
+  <main class="relative z-10">
+
+    <!-- 1. HERO -->
+    <section id="top" class="section flex min-h-screen flex-col justify-center pt-36">
+      <div class="glass fade-up mb-8 inline-flex w-fit items-center gap-3 rounded-full px-4 py-2" style="animation-delay:.1s">
+        <span class="relative flex h-2.5 w-2.5">
+          <span class="ping-slow absolute inline-flex h-full w-full rounded-full bg-neon-volt opacity-75"></span>
+          <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-neon-volt shadow-glow-volt"></span>
+        </span>
+        <span class="font-mono text-xs text-slate-300">Open for new projects &amp; collaborations</span>
+      </div>
+
+      <h1 id="heroTitle" class="max-w-4xl text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl md:text-7xl"
+          aria-label="Luca Illica Magrini — Software Developer & CS Student.">
+        Luca Illica Magrini — Software Developer &amp; CS Student.
+      </h1>
+
+      <p class="fade-up mt-8 max-w-2xl text-lg text-slate-400" style="animation-delay:1.4s">
+        Specializing in software engineering, FTC Robotics, embedded systems, and custom web applications.
+      </p>
+
+      <div class="fade-up mt-10 flex flex-wrap gap-4" style="animation-delay:1.7s">
+        <a href="#projects" class="cta">
+          <span class="spin"></span><span class="edge"></span>
+          <span class="inner">Esplora Progetti</span>
+        </a>
+        <a href="#contact" class="glass rounded-xl px-7 py-3.5 font-mono text-sm font-medium text-slate-200 transition hover:border-neon-indigo/60 hover:shadow-glow-indigo">
+          Lavoriamo Insieme / Contatti
+        </a>
+      </div>
+    </section>
+
+    <!-- 2. ABOUT & TECH STACK -->
+    <section id="about" class="section">
+      <div class="reveal">
+        <p class="section-label">01 / About &amp; Stack</p>
+        <h2 class="section-title">Dal circuito al browser.</h2>
+        <p class="mt-5 max-w-2xl text-slate-400">
+          Sono uno studente di informatica a cui piace tutto lo stack: robot che gareggiano in FTC,
+          firmware embedded, sistemi in rete e web app curate. Mi piace trasformare idee grezze in
+          cose che funzionano davvero.
+        </p>
+      </div>
+      <div class="glass reveal mt-12 rounded-3xl p-6 md:p-8">
+        <div id="tabs" role="tablist" class="flex flex-wrap gap-2"></div>
+        <ul id="skills" class="mt-8 flex flex-wrap gap-3"></ul>
+      </div>
+    </section>
+
+    <!-- 3. PROGETTI -->
+    <section id="projects" class="section">
+      <div class="reveal flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p class="section-label">02 / Featured Projects</p>
+          <h2 class="section-title">Cose che ho costruito.</h2>
+        </div>
+        <span id="ghStatus" class="font-mono text-xs text-slate-500">○ caricamento repo…</span>
+      </div>
+      <div id="projectGrid" class="mt-12 grid gap-6 md:grid-cols-3"></div>
+      <div class="mt-10 text-center">
+        <a id="allRepos" target="_blank" rel="noopener noreferrer" class="font-mono text-sm text-slate-400 transition hover:text-neon-cyan">Vedi tutti i repository su GitHub →</a>
+      </div>
+    </section>
+
+    <!-- 4. CONTATTI -->
+    <section id="contact" class="section">
+      <div class="reveal max-w-3xl">
+        <p class="section-label">03 / Work With Me</p>
+        <h2 class="section-title">
+          Hai un'idea o un progetto da realizzare insieme?
+          <span class="grad-text mt-1 block">Let's build something together.</span>
+        </h2>
+        <p class="mt-5 text-slate-400">
+          Sei un'azienda, uno sviluppatore o un creatore con un'idea in mente? Scrivimi per
+          collaborazioni, sviluppo software, sistemi embedded o consulenza tecnica.
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-8 lg:grid-cols-5">
+        <form id="contactForm" class="glass reveal space-y-5 rounded-3xl p-6 md:p-8 lg:col-span-3">
+          <div class="grid gap-5 sm:grid-cols-2">
+            <label><span class="lbl">Name</span><input name="name" required class="field" placeholder="Ada Lovelace" /></label>
+            <label><span class="lbl">Email</span><input name="email" type="email" required class="field" placeholder="ada@company.com" /></label>
+          </div>
+          <label class="block">
+            <span class="lbl">Project Type</span>
+            <select name="projectType" class="field">
+              <option>Web App</option>
+              <option>Embedded/Hardware</option>
+              <option>Automation/Scripts</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label class="block">
+            <span class="lbl">Message</span>
+            <textarea name="message" required rows="5" class="field resize-none" placeholder="Raccontami la tua idea, tempistiche e obiettivi…"></textarea>
+          </label>
+          <button id="submitBtn" type="submit"
+            class="glass relative flex w-full items-center justify-center overflow-hidden rounded-xl border border-neon-cyan/50 px-6 py-3.5 font-mono text-sm font-medium text-white disabled:cursor-wait">
+            <span id="submitLabel" class="flex items-center">Send Message</span>
+          </button>
+        </form>
+
+        <div id="directLinks" class="reveal space-y-4 lg:col-span-2">
+          <p class="font-mono text-xs text-slate-500">// direct links</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. TERMINAL -->
+    <section id="lab" class="section">
+      <div class="reveal">
+        <p class="section-label">04 / The Lab</p>
+        <h2 class="section-title">Esplora dal terminale.</h2>
+      </div>
+      <div id="terminal" class="glass reveal mt-10 overflow-hidden rounded-2xl shadow-glow">
+        <div class="flex items-center gap-2 border-b border-white/10 bg-black/30 px-4 py-3">
+          <span class="h-3 w-3 rounded-full bg-red-500/80"></span>
+          <span class="h-3 w-3 rounded-full bg-yellow-400/80"></span>
+          <span class="h-3 w-3 rounded-full bg-neon-volt/80"></span>
+          <span class="ml-3 font-mono text-xs text-slate-500">LUCA_LAB v1.0 — bash</span>
+        </div>
+        <div id="termBody" class="h-80 overflow-y-auto bg-black/40 p-5 font-mono text-sm leading-relaxed">
+          <div id="termHistory"></div>
+          <div class="flex items-center">
+            <span class="text-neon-volt">luca@lab</span><span class="text-slate-500">:</span><span class="text-neon-cyan">~</span><span class="mr-2 text-slate-500">$</span>
+            <div class="relative flex-1">
+              <span id="termMirror" class="whitespace-pre text-slate-100"></span><span class="cursor"></span>
+              <input id="termInput" aria-label="Terminal input" autocomplete="off" autocapitalize="off" spellcheck="false" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 6. FOOTER -->
+  <footer class="relative z-10 border-t border-white/10 bg-ink-950/60 backdrop-blur-md">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-6 py-10 md:flex-row">
+      <div class="text-center md:text-left">
+        <p class="font-mono text-sm text-white"><span class="text-neon-cyan">&lt;</span>LUCAIM08<span class="text-neon-cyan">/&gt;</span></p>
+        <p class="mt-1 text-xs text-slate-500">© <span id="year"></span> Luca Illica Magrini. Tutti i diritti riservati.</p>
+      </div>
+      <ul id="socials" class="flex gap-3"></ul>
+      <div class="float">
+        <button id="toTop" aria-label="Torna su" class="glass flex items-center gap-2 rounded-full px-5 py-2.5 font-mono text-xs text-neon-cyan transition hover:scale-105 hover:shadow-glow">↑ Back to top</button>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast" role="status"></div>
+
+<script>
+const CONFIG = {
+  name: 'Luca Illica Magrini',
+  handle: 'LUCAIM08',
+  email: 'illicamagriniluca@gmail.com',
+  github: 'https://github.com/LUCAIM08',
+  githubUser: 'LUCAIM08',
+  linkedin: 'https://www.linkedin.com/in/luca-illica-magrini-279629305/',
+  discord: 'lucaim08_',
+  formEndpoint: 'https://formspree.io/f/mgaoejnz',
+};
+
+const SKILLS = {
+  'Languages': [
+    ['Python', '#facc15'], ['C++', '#3b82f6'], ['C', '#60a5fa'], ['Java', '#f97316'],
+    ['JavaScript', '#fde047'], ['TypeScript', '#38bdf8'], ['Bash', '#a3ff12'],
+  ],
+  'Web & Frameworks': [
+    ['React', '#22d3ee'], ['Astro', '#a855f7'], ['Tailwind CSS', '#38bdf8'],
+    ['Node.js', '#84cc16'], ['Framer Motion', '#ec4899'], ['REST APIs', '#6366f1'],
+  ],
+  'Robotics & Embedded': [
+    ['FTC SDK', '#ef4444'], ['Arduino', '#14b8a6'], ['ESP32', '#f43f5e'],
+    ['Raspberry Pi', '#e11d48'], ['Sensors & I/O', '#a3ff12'], ['PID Control', '#22d3ee'],
+  ],
+  'Systems & Security': [
+    ['Linux', '#fbbf24'], ['Networking', '#6366f1'], ['Git', '#f97316'],
+    ['Docker', '#0ea5e9'], ['Wireshark', '#38bdf8'], ['Cybersecurity', '#a3ff12'],
+  ],
+};
+
+// "repo" viene confrontato (case-insensitive) con i repo restituiti dall'API GitHub
+const PROJECTS = [
+  { title: 'FTC Robotics #25074', repo: 'ftc-25074', accent: '#22d3ee',
+    description: 'Software autonomo e TeleOp per FIRST Tech Challenge: visione, odometria, controllo PID e strategia di gara.',
+    tags: ['Java', 'FTC SDK', 'Robotics'] },
+  { title: 'Web Systems', repo: 'web-systems', accent: '#6366f1',
+    description: 'Web app e dashboard custom, pensate per le performance con tooling frontend moderno.',
+    tags: ['Astro', 'React', 'Tailwind'] },
+  { title: 'System & Network Tools', repo: 'system-tools', accent: '#a3ff12',
+    description: 'Script e utility per automazione, diagnostica di rete e amministrazione di sistema.',
+    tags: ['Python', 'Bash', 'Networking'] },
+];
+
+/* =====================================================================
+   Utility
+   ===================================================================== */
+const $ = (s, el = document) => el.querySelector(s);
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+function toast(msg) {
+  const t = $('#toast');
+  t.textContent = '✓ ' + msg;
+  t.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+/* =====================================================================
+   Particelle di sfondo
+   ===================================================================== */
+(function particles() {
+  const canvas = $('#bg');
+  const ctx = canvas.getContext('2d');
+  const colors = ['34,211,238', '99,102,241', '163,255,18'];
+  const mouse = { x: -9999, y: -9999 };
+  let w, h, ps;
+
+  function init() {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    w = innerWidth; h = innerHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const n = Math.min(90, Math.floor((w * h) / 18000));
+    ps = Array.from({ length: n }, () => ({
+      x: Math.random() * w, y: Math.random() * h,
+      vx: (Math.random() - .5) * .25, vy: (Math.random() - .5) * .25,
+      r: Math.random() * 1.4 + .6, c: colors[Math.floor(Math.random() * colors.length)],
+    }));
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    for (let i = 0; i < ps.length; i++) {
+      const p = ps[i];
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > w) p.vx *= -1;
+      if (p.y < 0 || p.y > h) p.vy *= -1;
+      const dx = p.x - mouse.x, dy = p.y - mouse.y;
+      if (dx * dx + dy * dy < 14000) { p.x += dx * .002; p.y += dy * .002; }
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${p.c},.7)`;
+      ctx.shadowBlur = 8; ctx.shadowColor = `rgba(${p.c},.8)`;
+      ctx.fill(); ctx.shadowBlur = 0;
+
+      for (let j = i + 1; j < ps.length; j++) {
+        const q = ps[j], ddx = p.x - q.x, ddy = p.y - q.y;
+        const d = Math.hypot(ddx, ddy);
+        if (d < 130) {
+          ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
+          ctx.strokeStyle = `rgba(99,102,241,${.14 * (1 - d / 130)})`;
+          ctx.lineWidth = .6; ctx.stroke();
+        }
+      }
+    }
+    if (!reduceMotion) requestAnimationFrame(draw);
+  }
+
+  init(); draw();
+  addEventListener('resize', init);
+  addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+})();
+
+/* =====================================================================
+   Hero: split-text
+   ===================================================================== */
+(function splitHero() {
+  const h1 = $('#heroTitle');
+  const words = h1.textContent.trim().split(/\s+/);
+  const nameWords = ['Luca', 'Illica', 'Magrini'];
+  h1.innerHTML = words.map((w, i) =>
+    `<span class="word ${nameWords.includes(w) ? 'grad-text' : ''}" aria-hidden="true" style="animation-delay:${0.2 + i * 0.09}s">${esc(w)}</span>`
+  ).join('');
+})();
+
+/* =====================================================================
+   Reveal on scroll
+   ===================================================================== */
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); revealObs.unobserve(e.target); } });
+}, { threshold: .12, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach((el) => revealObs.observe(el));
+
+/* =====================================================================
+   Tech stack: tab + badge
+   ===================================================================== */
+(function techStack() {
+  const tabsEl = $('#tabs'), listEl = $('#skills');
+  const names = Object.keys(SKILLS);
+  let active = names[0];
+
+  function renderSkills() {
+    listEl.innerHTML = SKILLS[active].map(([n, c], i) =>
+      `<li class="badge" style="--c:${c};animation-delay:${i * 0.07}s">${esc(n)}</li>`).join('');
+  }
+  function renderTabs() {
+    tabsEl.innerHTML = names.map((n) =>
+      `<button role="tab" aria-selected="${n === active}" class="tab-btn ${n === active ? 'active' : ''}" data-tab="${esc(n)}">${esc(n)}</button>`).join('');
+  }
+  tabsEl.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-tab]');
+    if (!b || b.dataset.tab === active) return;
+    active = b.dataset.tab;
+    renderTabs(); renderSkills();
+  });
+  renderTabs(); renderSkills();
+})();
+
+/* =====================================================================
+   Progetti + integrazione GitHub + tilt 3D
+   ===================================================================== */
+(function projects() {
+  const grid = $('#projectGrid'), status = $('#ghStatus');
+  $('#allRepos').href = CONFIG.github;
+
+  function render(list) {
+    grid.innerHTML = list.map((p, i) => `
+      <div class="tilt-wrap reveal" style="transition-delay:${i * 0.12}s">
+        <a href="${esc(p.url || CONFIG.github)}" target="_blank" rel="noopener noreferrer" class="tilt glass" style="--a:${p.accent}">
+          <div class="shine"></div>
+          <div class="content">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs" style="color:${p.accent}">${String(i + 1).padStart(2, '0')} // repo</span>
+              ${p.stars != null ? `<span class="font-mono text-xs text-slate-400">★ ${p.stars}</span>` : ''}
+            </div>
+            <h3 class="mt-4 text-xl font-semibold text-white">${esc(p.title)}</h3>
+            <p class="mt-3 flex-1 text-sm leading-relaxed text-slate-400">${esc(p.description)}</p>
+            <ul class="mt-6 flex flex-wrap gap-2">
+              ${p.tags.map((t) => `<li class="rounded-md border border-white/10 bg-ink-900/60 px-2.5 py-1 font-mono text-[11px] text-slate-300">${esc(t)}</li>`).join('')}
+            </ul>
+            <span class="mt-6 font-mono text-xs" style="color:${p.accent}">Vedi su GitHub →</span>
+          </div>
+        </a>
+      </div>`).join('');
+
+    grid.querySelectorAll('.reveal').forEach((el) => revealObs.observe(el));
+
+    // Tilt 3D
+    grid.querySelectorAll('.tilt').forEach((card) => {
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - .5;
+        const y = (e.clientY - r.top) / r.height - .5;
+        card.style.transform = `rotateX(${-y * 20}deg) rotateY(${x * 20}deg)`;
+        card.style.setProperty('--mx', (x + .5) * 100 + '%');
+        card.style.setProperty('--my', (y + .5) * 100 + '%');
+      });
+      card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+    });
+  }
+
+  render(PROJECTS);
+
+  fetch(`https://api.github.com/users/${CONFIG.githubUser}/repos?per_page=100&sort=updated`)
+    .then((r) => { if (!r.ok) throw new Error('GitHub API error'); return r.json(); })
+    .then((repos) => {
+      const map = new Map(repos.map((r) => [r.name.toLowerCase(), r]));
+      const merged = PROJECTS.map((p) => {
+        const r = map.get(p.repo.toLowerCase());
+        if (!r) return p;
+        const tags = r.language && !p.tags.includes(r.language) ? [r.language, ...p.tags].slice(0, 4) : p.tags;
+        return { ...p, description: r.description || p.description, url: r.html_url, stars: r.stargazers_count, tags };
+      });
+      render(merged);
+      status.textContent = '● sincronizzato con GitHub';
+    })
+    .catch(() => { status.textContent = '○ modalità offline (dati statici)'; });
+})();
+
+/* =====================================================================
+   Contatti: card copia-rapida
+   ===================================================================== */
+(function directLinks() {
+  const items = [
+    ['Email', CONFIG.email, null],
+    ['GitHub', '@' + CONFIG.handle, CONFIG.github],
+    ['LinkedIn', CONFIG.linkedin.replace('https://www.', ''), CONFIG.linkedin],
+    ['Discord', CONFIG.discord, null],
+  ];
+  const wrap = $('#directLinks');
+  items.forEach(([label, value, href]) => {
+    const div = document.createElement('div');
+    div.className = 'glass flex items-center justify-between gap-3 rounded-2xl p-4 transition hover:-translate-y-1 hover:shadow-glow-indigo';
+    div.innerHTML = `
+      <div class="min-w-0">
+        <p class="font-mono text-[11px] uppercase tracking-wider text-slate-500">${esc(label)}</p>
+        ${href
+          ? `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer" class="block truncate text-sm text-slate-200 hover:text-neon-cyan">${esc(value)}</a>`
+          : `<p class="truncate text-sm text-slate-200">${esc(value)}</p>`}
+      </div>
+      <button class="shrink-0 rounded-lg border border-white/10 px-3 py-1.5 font-mono text-xs text-slate-300 transition hover:border-neon-cyan/60 hover:text-neon-cyan">Copy</button>`;
+    div.querySelector('button').addEventListener('click', async () => {
+      // per GitHub/LinkedIn copio l'URL completo, per gli altri il valore
+      const text = label === 'GitHub' ? CONFIG.github : label === 'LinkedIn' ? CONFIG.linkedin : value;
+      try { await navigator.clipboard.writeText(text); }
+      catch {
+        const ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); ta.remove();
+      }
+      toast(`${label} copiato negli appunti`);
+    });
+    wrap.appendChild(div);
+  });
+})();
+
+/* =====================================================================
+   Contatti: form con stati
+   ===================================================================== */
+(function contactForm() {
+  const form = $('#contactForm'), btn = $('#submitBtn'), label = $('#submitLabel');
+
+  const checkSVG = `<svg class="check h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="#a3ff12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`;
+
+  function burst() {
+    const holder = document.createElement('span');
+    holder.className = 'relative mr-2 inline-flex h-5 w-5 items-center justify-center';
+    for (let i = 0; i < 12; i++) {
+      const a = (i / 12) * Math.PI * 2;
+      const d = document.createElement('span');
+      d.className = 'burst-dot';
+      d.style.background = i % 2 ? '#a3ff12' : '#22d3ee';
+      d.style.setProperty('--x', Math.cos(a) * 26 + 'px');
+      d.style.setProperty('--y', Math.sin(a) * 26 + 'px');
+      holder.appendChild(d);
+    }
+    holder.insertAdjacentHTML('beforeend', checkSVG);
+    return holder;
+  }
+
+  function setState(s) {
+    label.innerHTML = '';
+    btn.disabled = s === 'sending';
+    btn.style.borderColor = s === 'sent' ? '#a3ff12' : s === 'error' ? '#f43f5e' : '';
+    if (s === 'idle') label.textContent = 'Send Message';
+    if (s === 'sending') { label.innerHTML = '<span class="spinner"></span>Sending...'; }
+    if (s === 'sent') { label.appendChild(burst()); label.append('Message Sent! 🚀'); }
+    if (s === 'error') label.textContent = 'Qualcosa è andato storto — scrivimi via email';
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (btn.disabled) return;
+    setState('sending');
+    try {
+      const res = await fetch(CONFIG.formEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+      });
+      if (!res.ok) throw new Error('Request failed');
+      setState('sent'); form.reset();
+      setTimeout(() => setState('idle'), 4500);
+    } catch {
+      setState('error');
+      setTimeout(() => setState('idle'), 4000);
+    }
+  });
+})();
+
+/* =====================================================================
+   Terminale interattivo
+   ===================================================================== */
+(function terminal() {
+  const body = $('#termBody'), hist = $('#termHistory');
+  const input = $('#termInput'), mirror = $('#termMirror');
+  let busy = false, past = [], idx = -1;
+
+  const commands = {
+    help: () => [
+      'Comandi disponibili:',
+      '  help      mostra questo messaggio',
+      '  about     chi sono',
+      '  skills    il mio tech stack',
+      '  projects  progetti in evidenza',
+      '  contact   contatti (scorre al form)',
+      '  clear     pulisce il terminale',
+    ],
+    about: () => [
+      `${CONFIG.name} (${CONFIG.handle})`,
+      'Software developer & CS student.',
+      'FTC Robotics, sistemi embedded e web app custom.',
+      'Aperto a nuovi progetti e collaborazioni.',
+    ],
+    skills: () => Object.entries(SKILLS).map(([c, items]) => `[${c}] ${items.map((s) => s[0]).join(', ')}`),
+    projects: () => PROJECTS.map((p, i) => `${i + 1}. ${p.title} — ${p.tags.join(' / ')}`),
+    contact: () => [
+      `email   : ${CONFIG.email}`,
+      `github  : ${CONFIG.github}`,
+      `discord : ${CONFIG.discord}`,
+      'Scorro al form di contatto...',
+    ],
+  };
+
+  const scrollDown = () => { body.scrollTop = body.scrollHeight; };
+
+  function addLine(cls, text = '') {
+    const p = document.createElement('p');
+    p.className = cls;
+    p.textContent = text;
+    hist.appendChild(p);
+    scrollDown();
+    return p;
+  }
+
+  function addInputLine(text) {
+    const p = document.createElement('p');
+    p.className = 'text-slate-100';
+    p.innerHTML = '<span class="text-neon-volt">luca@lab</span><span class="text-slate-500">:</span><span class="text-neon-cyan">~</span><span class="text-slate-500">$ </span>';
+    p.append(text);
+    hist.appendChild(p);
+    scrollDown();
+  }
+
+  async function typeLines(lines) {
+    for (const line of lines) {
+      const p = addLine('whitespace-pre-wrap text-slate-400');
+      for (let i = 1; i <= line.length; i++) {
+        p.textContent = line.slice(0, i);
+        scrollDown();
+        await sleep(reduceMotion ? 0 : 10);
+      }
+      await sleep(reduceMotion ? 0 : 60);
+    }
+  }
+
+  async function run(raw) {
+    const cmd = raw.trim().toLowerCase();
+    addInputLine(raw);
+    if (!cmd) return;
+    past.unshift(raw); idx = -1;
+    if (cmd === 'clear') { hist.innerHTML = ''; return; }
+
+    busy = true;
+    const out = commands[cmd] ? commands[cmd]() : [`comando non trovato: ${cmd}. Digita 'help'.`];
+    await typeLines(out);
+    if (cmd === 'contact') {
+      await sleep(400);
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    }
+    busy = false;
+    input.focus({ preventScroll: true });
+  }
+
+  addLine('whitespace-pre-wrap text-slate-400', "LUCA_LAB v1.0 — digita 'help' per iniziare.");
+
+  input.addEventListener('input', () => { mirror.textContent = input.value; });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !busy) {
+      const v = input.value; input.value = ''; mirror.textContent = '';
+      run(v);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const n = Math.min(idx + 1, past.length - 1);
+      if (past[n] !== undefined) { idx = n; input.value = past[n]; mirror.textContent = past[n]; }
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      idx = Math.max(idx - 1, -1);
+      input.value = idx >= 0 ? past[idx] : ''; mirror.textContent = input.value;
+    }
+  });
+  $('#terminal').addEventListener('click', () => input.focus({ preventScroll: true }));
+})();
+
+/* =====================================================================
+   Footer
+   ===================================================================== */
+(function footer() {
+  $('#year').textContent = new Date().getFullYear();
+  const socials = [
+    ['GitHub', CONFIG.github], ['LinkedIn', CONFIG.linkedin], ['Email', 'mailto:' + CONFIG.email],
+  ];
+  $('#socials').innerHTML = socials.map(([l, h]) =>
+    `<li><a href="${esc(h)}" ${h.startsWith('http') ? 'target="_blank"' : ''} rel="noopener noreferrer"
+        class="glass inline-block rounded-lg px-4 py-2 font-mono text-xs text-slate-300 transition hover:-translate-y-1 hover:text-neon-cyan hover:shadow-glow">${l}</a></li>`).join('');
+  $('#toTop').addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+})();
+</script>
+</body>
+</html>
